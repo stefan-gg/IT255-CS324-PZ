@@ -6,60 +6,50 @@ from django.http.response import HttpResponse, JsonResponse
 from django.core import serializers
 import json
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework.parsers import JSONParser
+from api.serializers import CourseSerializer, UserSerializer
 
 # Create your views here.
 
+
 @csrf_exempt
 def courseGetUpdateDeleteOperations(request, id):
-    #user = User(username='Username', password='1234', balance=100, autor=True)
-    # user.save()
-
-    #course = Course(name="HTML5", short_description="Short", description='Desc', price=89.99, image_URL='image', autor_id=User.objects.get(id=2))
-    # course.save()
-
-    # course.autor_id.add(User.objects.get(id=1))
-    # course.save()
-    #kupljen = PurchasedCourses(user_id=User.objects.get(id=1),course_id=Course.objects.get(id=3))
-    # kupljen.save()
-
-    # PurchasedCourses.objects.all().delete()
-
-    # kupljen.user_id.add(User.objects.get(id=1))
-    # kupljen.course_id.add(Course.objects.get(id=1))
-    # PurchasedCourses.objects.get(id=1).delete()
+    course = Course.objects.get(id=id)
 
     if request.method == 'GET':
-        data = Course.objects.get(id=id)
-        data = serializers.serialize('json', [data])
+        data = serializers.serialize('json', [course])
         data = json.loads(data)
 
     elif request.method == 'PUT':
-        name = request.POST['name']
-        short_description = request.POST['short_description']
-        description = request.POST['description']
-        price = request.POST['price']
-        image_URL = request.POST['image_URL']
-        autor_id = User.objects.get(id=request.POST['autor_id'])
+        course_data = JSONParser().parse(request)
 
-        Course.objects.filter(id=id).update(name=name, short_description=short_description, description=description,
-                                            price=price, image_URL=image_URL, autor_id=autor_id)
-        data = 'Course updated'
+        course_serializer = CourseSerializer(course, data=course_data)
+
+        if course_serializer.is_valid():
+            course_serializer.save()
+            data = 'Course updated'
+        else:
+            data = 'Course is not updated !'
 
     elif request.method == 'DELETE':
+
         PurchasedCourses.objects.filter(course_id=id).delete()
         Course.objects.filter(id=id).delete()
         data = 'Course deleted'
 
     return JsonResponse(data, safe=False)
 
+
 @csrf_exempt
 def createCourse(request):
+
     name = request.POST['name']
     short_description = request.POST['short_description']
     description = request.POST['description']
     price = request.POST['price']
     image_URL = request.POST['image_URL']
     autor_id = User.objects.get(id=request.POST['autor_id'])
+
     course = Course(name=name, short_description=short_description, description=description,
                     price=price, image_URL=image_URL, autor_id=autor_id)
     course.save()
@@ -68,34 +58,41 @@ def createCourse(request):
     data = json.loads(data)
     return JsonResponse(data, safe=False)
 
+
 @csrf_exempt
 def createUser(request):
+
     username = request.POST['username']
     password = request.POST['password']
     balance = 999
     author = request.POST['author']
 
-    user = User(username=username, password=password,balance=balance,autor=author)
+    user = User(username=username, password=password,
+                balance=balance, autor=author)
     user.save()
 
-    ##data = serializers.serialize('json', ['User added'])
     data = 'User added'
     return JsonResponse([data], safe=False)
 
+
 @csrf_exempt
 def userGetUpdateDeleteOperations(request, id):
+    user = User.objects.get(id=id)
+
     if request.method == 'GET':
-        data = User.objects.get(id=id)
-        data = serializers.serialize('json', [data])
+        data = serializers.serialize('json', [user])
         data = json.loads(data)
 
     elif request.method == 'PUT':
-        username = request.POST['username']
-        password = request.POST['password']
-        balance = request.POST['balance']
-        autor = request.POST['autor']
-        User.objects.filter(id=id).update(username=username, password=password, balance=balance, autor=autor)
-        data = 'User updated'
+
+        user_data = JSONParser().parse(request)
+        user_serializer = UserSerializer(user, data=user_data)
+
+        if user_serializer.is_valid():
+            user_serializer.save()
+            data = 'User updated'
+        else:
+            data = 'User is not updated !'
 
     elif request.method == 'DELETE':
         PurchasedCourses.objects.filter(user_id=id).delete()
@@ -104,28 +101,34 @@ def userGetUpdateDeleteOperations(request, id):
 
     return JsonResponse(data, safe=False)
 
+
 @csrf_exempt
 def validateUser(request):
     username = request.POST['username']
     password = request.POST['password']
 
-    user = User.objects.filter(username = username, password = password)
-    
+    user = User.objects.filter(username=username, password=password)
+
     if not user.count():
-        #ako nema korisnika koji se podudara sa kriterijumima
+        # ako nema korisnika koji se podudara sa unetim podacima
         return JsonResponse(['Wrong username or password !'], safe=False)
 
     data = serializers.serialize('json', [user])
     data = json.loads(data)
     return JsonResponse(data, safe=False)
 
+
 @csrf_exempt
 def addPurchase(request):
-    bought = PurchasedCourses(user_id=User.objects.get(id=request.POST['user_id']),course_id=Course.objects.get(request.POST['course_id']))
+    user_id = request.POST['user_id']
+    course_id = request.POST['course_id']
+    bought = PurchasedCourses(user_id=User.objects.get(
+        id=user_id), course_id=Course.objects.get(id=course_id))
     bought.save()
     message = 'Purchase added !'
-    
+
     return JsonResponse([message], safe=False)
+
 
 @csrf_exempt
 def userPurchasedCourses(request, id):
@@ -134,7 +137,7 @@ def userPurchasedCourses(request, id):
 
     if not purchasedCourses.count():
         return JsonResponse(['No purchased courses'], safe=False)
-    
+
     data = serializers.serialize('json', purchasedCourses)
     data = json.loads(data)
     return JsonResponse(data, safe=False)

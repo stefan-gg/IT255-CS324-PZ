@@ -4,7 +4,7 @@ from . import views
 
 urlpatterns = [
     path('courses/add-course/', views.createCourse),
-    path('courses/<int:id>/', views.courseGetUpdateDeleteOperations),
+    path('courses/<int:id>', views.courseGetUpdateDeleteOperations),
 
     path('users/add-user/', views.createUser),
     path('users/<int:id>', views.userGetUpdateDeleteOperations),
