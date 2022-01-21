@@ -42,13 +42,15 @@ def courseGetUpdateDeleteOperations(request, id):
 
 @csrf_exempt
 def createCourse(request):
+    data = json.loads(request.body)
 
-    name = request.POST['name']
-    short_description = request.POST['short_description']
-    description = request.POST['description']
-    price = request.POST['price']
-    image_URL = request.POST['image_URL']
-    autor_id = User.objects.get(id=request.POST['autor_id'])
+    name = data.get('name')
+    short_description = data.get('short_description')
+    description = data.get('description')
+    price = data.get('price')
+    image_URL = data.get('image_URL')
+    id = data.get('autor_id')
+    autor_id = User.objects.get(id=id)
 
     course = Course(name=name, short_description=short_description, description=description,
                     price=price, image_URL=image_URL, autor_id=autor_id)
@@ -61,18 +63,25 @@ def createCourse(request):
 
 @csrf_exempt
 def createUser(request):
+    data = json.loads(request.body)
 
-    username = request.POST['username']
-    password = request.POST['password']
+    username = data.get('username')
+    password = data.get('password')
     balance = 999
-    author = request.POST['author']
+    author = data.get('author')
 
-    user = User(username=username, password=password,
-                balance=balance, autor=author)
-    user.save()
+    check_username = User.objects.filter(username=username)
+    
+    if not check_username.count:
+    
+        user = User(username=username, password=password,
+                    balance=balance, autor=author)
+        user.save()
 
-    data = 'User added'
-    return JsonResponse([data], safe=False)
+        data = 'User added'
+        return JsonResponse([data], safe=False)
+    
+    return JsonResponse(['Username exists !'], safe=False)
 
 
 @csrf_exempt
@@ -104,24 +113,27 @@ def userGetUpdateDeleteOperations(request, id):
 
 @csrf_exempt
 def validateUser(request):
-    username = request.POST['username']
-    password = request.POST['password']
-
+    data = json.loads(request.body)
+    
+    username = data.get('username')
+    password = data.get('password')
     user = User.objects.filter(username=username, password=password)
 
     if not user.count():
         # ako nema korisnika koji se podudara sa unetim podacima
         return JsonResponse(['Wrong username or password !'], safe=False)
 
-    data = serializers.serialize('json', [user])
+    data = serializers.serialize('json', user)
     data = json.loads(data)
     return JsonResponse(data, safe=False)
 
 
 @csrf_exempt
 def addPurchase(request):
-    user_id = request.POST['user_id']
-    course_id = request.POST['course_id']
+    data = json.loads(request.body)
+
+    user_id = data.get('user_id')
+    course_id = data.get('course_id')
     bought = PurchasedCourses(user_id=User.objects.get(
         id=user_id), course_id=Course.objects.get(id=course_id))
     bought.save()
