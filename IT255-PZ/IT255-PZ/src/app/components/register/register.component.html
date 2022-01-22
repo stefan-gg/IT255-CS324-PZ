@@ -1,0 +1,34 @@
+<h2>Registration page</h2>
+<div *ngIf="usernameError" class="alert alert-danger">
+    <p class="text-danger">That username already exists !</p>
+</div>
+<p>Please fill all the fields !</p>
+<form [formGroup]="registerForm" (ngSubmit)="registerUsername()">
+    <table>
+        <table>
+            <tr>
+                <td><label for="username">Username :</label></td>
+                <td><input type="text" name="username" placeholder="User12" id="username" formControlName="username">
+                </td>
+            </tr>
+            <tr>
+                <td><label for="password">Password :</label></td>
+                <td><input type="password" name="password" id="password" formControlName="password"></td>
+            </tr>
+            <tr>
+                <br>
+                <td><div *ngIf="passwordError">
+                    <p class="text-danger">Password must contain at least 5 characters !</p>
+                </div></td>
+            </tr>
+            <tr>
+                <td><label for="author">I want to </label></td>
+                <td><select name="author" id="author" formControlName="author">
+                        <option value="False">buy courses.</option>
+                        <option value="True">make courses.</option>
+                    </select></td>
+            </tr>
+            <button class="btn btn-primary" [disabled]="!registerForm.valid" type="submit">Register</button>
+        </table>
+    </table>
+</form>

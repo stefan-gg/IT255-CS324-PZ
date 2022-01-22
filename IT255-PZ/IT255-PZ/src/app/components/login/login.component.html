@@ -1,0 +1,18 @@
+<app-navbar></app-navbar>
+<div *ngIf="errorMessage" class="alert alert-danger">
+    <p class="text-danger">Login or password are not correct !</p>
+</div>
+<form [formGroup]="form" (ngSubmit)="loginUser()" >
+    <table>
+        <tr>
+            <td><label for="username">Username :</label></td>
+            <td><input type="text" name="username" id="username" formControlName="username"></td>
+        </tr>
+        <tr>
+            <td><label for="password">Password :</label></td>
+            <td><input type="password" name="password" id="password" formControlName="password"></td>
+        </tr>
+        <button class="btn btn-primary" [disabled]="!form.valid" type="submit">Login</button>
+    </table>
+    <a class="text-info" href="/register">Want to create a new account ? Click here !</a>
+</form>
