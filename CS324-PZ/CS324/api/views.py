@@ -70,9 +70,9 @@ def createUser(request):
     balance = 999
     author = data.get('author')
 
-    check_username = User.objects.filter(username=username)
-    
-    if not check_username.count:
+    check_username = User.objects.filter(username=username).count()
+   
+    if check_username == 0:
     
         user = User(username=username, password=password,
                     balance=balance, autor=author)
