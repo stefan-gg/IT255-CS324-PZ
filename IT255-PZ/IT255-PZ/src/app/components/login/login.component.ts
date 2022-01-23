@@ -40,7 +40,8 @@ export class LoginComponent implements OnInit {
         this.errorMessage = true;
       } else {
         console.log(result[0].fields);
-        this.router.navigate(["register"]);
+        window.sessionStorage.setItem("loginData", JSON.stringify(result))
+        this.router.navigate(["home"]);
       }
     })
   }

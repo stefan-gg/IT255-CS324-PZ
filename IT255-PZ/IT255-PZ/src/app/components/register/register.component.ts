@@ -12,23 +12,42 @@ import { UserService } from 'src/app/services/user/user.service';
 export class RegisterComponent implements OnInit {
   usernameError: boolean;
   passwordError: boolean;
+  usernameLen: boolean;
+  passwordLength = 0;
+  usernameLength = 0;
   registerForm: FormGroup
+  username: AbstractControl
   password: AbstractControl
 
   constructor(private formBuilder: FormBuilder, private router: Router, private userService: UserService) {
     this.usernameError = false;
     this.passwordError = false;
+    this.usernameLen = false;
     this.registerForm = this.formBuilder.group({
       username: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required),
       author: new FormControl('', Validators.required)
     });
+
+    this.username = this.registerForm.controls['username'];
     this.password = this.registerForm.controls['password'];
 
+    this.username.valueChanges.subscribe(
+      (username: string) => {
+        if (username.length < 5){
+          this.usernameLength = username.length;
+          this.usernameLen = true;
+        } else {
+          this.usernameLen = false;
+        }
+      }
+    )
+
     this.password.valueChanges.subscribe(
-      (sifra: string) => {
-        if (sifra.length < 5){
+      (password: string) => {
+        if (password.length < 5){
           this.passwordError = true;
+          this.passwordLength = password.length;
         } else {
           this.passwordError = false;
         }

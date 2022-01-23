@@ -19,6 +19,6 @@ export class UserService {
 
   register(user: any): Observable<any> {
     const url = this.BASE_URL + "add-user/";
-    return this.httpClient.put(url, user).pipe(map((response : any) => response));
+    return this.httpClient.post(url, user).pipe(map((response : any) => response));
   }
 }

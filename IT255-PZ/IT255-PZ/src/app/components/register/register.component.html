@@ -12,14 +12,24 @@
                 </td>
             </tr>
             <tr>
+                <td></td>
+                <td>
+                    <div *ngIf="usernameLen">
+                        <p class="text-danger">Username should contain {{ 5 - usernameLength }} more characters !</p>
+                    </div>
+                </td>
+            </tr>
+            <tr>
                 <td><label for="password">Password :</label></td>
                 <td><input type="password" name="password" id="password" formControlName="password"></td>
             </tr>
             <tr>
                 <br>
-                <td><div *ngIf="passwordError">
-                    <p class="text-danger">Password must contain at least 5 characters !</p>
-                </div></td>
+                <td>
+                    <div *ngIf="passwordError">
+                        <p class="text-danger">Password should contain {{ 5 - passwordLength }} more characters !</p>
+                    </div>
+                </td>
             </tr>
             <tr>
                 <td><label for="author">I want to </label></td>
