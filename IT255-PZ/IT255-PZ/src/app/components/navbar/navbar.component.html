@@ -1,1 +1,19 @@
-<p>navbar works!</p>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" [routerLink]="['/home']">Courses.com</a>
+        <a><p class="text-success">Hello, <strong>{{username}}</strong> !</p> </a>
+        <table>
+            <tr>
+                <td><a [routerLink]="['/home']">Home</a></td>
+                <td class="separator">|</td>
+                <td *ngIf="!userIsAuthor"><a [routerLink]="['/my-courses']">My courses</a></td>
+                <td class="separator">|</td>
+                <div *ngIf="userIsAuthor">
+                    <td><a [routerLink]="['/add-course']">Add course</a></td>
+                    <td class="separator">|</td>
+                </div>
+                <td><a [routerLink]="['/logout']">Logout</a></td>
+            </tr>
+        </table>
+    </div>
+</nav>

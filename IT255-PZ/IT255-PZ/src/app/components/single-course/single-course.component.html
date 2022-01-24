@@ -1,0 +1,53 @@
+<app-navbar></app-navbar>
+<div *ngIf="purchase">
+    <p class="text-success">Purchase successful !</p>
+</div>
+<div *ngIf="updated">
+    <p class="text-success">Update successful !</p>
+</div>
+<div *ngIf="!courseDeleted">
+
+    <div *ngIf="!userIsAuthor">
+        {{course.shortDescription}}
+        {{course.imageURL}}
+        {{course.description}}
+        {{course.price}}
+    </div>
+
+    <div *ngIf="userIsAuthor">
+        <form [formGroup]="form" (ngSubmit)="update()">
+            <input type="hidden" value="{{course.id}}" formControlName="id">
+
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" value="{{course.name}}"
+                formControlName="name">
+            <br>
+
+            <label for="shortDescription">Short Description</label>
+            <input type="text" id="shortDescription" name="shortDescription" value="{{course.shortDescription}}"
+                formControlName="shortDescription">
+            <br>
+            <label for="imageURL">Image URL</label>
+            <input type="text" id="imageURL" name="imageURL" value="{{course.imageURL}}" formControlName="imageURL">
+            <br>
+            <label for="description">Description</label>
+            <input type="text" id="description" name="description" value="{{course.description}}"
+                formControlName="description">
+            <br>
+            <label for="price">Price</label>
+            <input type="text" name="price" id="price" value="{{course.price}}" formControlName="price">
+            <br>
+            <button type="submit" class="btn btn-success">Update course</button><br>
+            <button (click)="deleteCourse()" class="btn btn-danger">Delete course</button>
+        </form>
+    </div>
+    <div *ngIf="!userIsAuthor">
+        <p class="text-danger" *ngIf="!enoughMoney">You don't have enough money !</p>
+        <button (click)="buy()" class="btn btn-success" [disabled]="!enoughMoney">Buy course</button>
+    </div>
+
+
+</div>
+<div *ngIf="courseDeleted">
+    <a [routerLink]="['/home']">Course is deleted. This is a link to the home page.</a>
+</div>

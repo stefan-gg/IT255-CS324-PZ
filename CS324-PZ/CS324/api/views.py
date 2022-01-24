@@ -50,15 +50,16 @@ def createCourse(request):
     price = data.get('price')
     image_URL = data.get('image_URL')
     id = data.get('autor_id')
+
     autor_id = User.objects.get(id=id)
 
     course = Course(name=name, short_description=short_description, description=description,
                     price=price, image_URL=image_URL, autor_id=autor_id)
     course.save()
 
-    data = serializers.serialize('json', 'Course added')
-    data = json.loads(data)
-    return JsonResponse(data, safe=False)
+    #data = serializers.serialize('json', ['Course added'])
+    #data = json.loads(data)
+    return JsonResponse(['Course added'], safe=False)
 
 
 @csrf_exempt
@@ -71,16 +72,16 @@ def createUser(request):
     author = data.get('author')
 
     check_username = User.objects.filter(username=username).count()
-   
+
     if check_username == 0:
-    
+
         user = User(username=username, password=password,
                     balance=balance, autor=author)
         user.save()
 
         data = 'User added'
         return JsonResponse([data], safe=False)
-    
+
     return JsonResponse(['Username exists !'], safe=False)
 
 
@@ -114,7 +115,7 @@ def userGetUpdateDeleteOperations(request, id):
 @csrf_exempt
 def validateUser(request):
     data = json.loads(request.body)
-    
+
     username = data.get('username')
     password = data.get('password')
     user = User.objects.filter(username=username, password=password)
@@ -134,6 +135,7 @@ def addPurchase(request):
 
     user_id = data.get('user_id')
     course_id = data.get('course_id')
+
     bought = PurchasedCourses(user_id=User.objects.get(
         id=user_id), course_id=Course.objects.get(id=course_id))
     bought.save()
@@ -143,8 +145,33 @@ def addPurchase(request):
 
 
 @csrf_exempt
-def userPurchasedCourses(request, id):
+def getAllCurses(request):
+    courses = Course.objects.all()
+
+    #if not courses.count():
+    #    return JsonResponse(['No courses found !'], safe=False)
+
+    data = serializers.serialize('json', courses)
+    data = json.loads(data)
+    return JsonResponse(data, safe=False)
+
+
+@csrf_exempt
+def getAllAuthroCourses(request, id):
+    courses = Course.objects.filter(autor_id=id)
+
+    #if not courses.count():
+    #    # ako nema autor nema svoje kurseve
+    #    return JsonResponse(['No courses found !'], safe=False)
     
+    data = serializers.serialize('json', courses)
+    data = json.loads(data)
+    return JsonResponse(data, safe=False)
+
+
+@csrf_exempt
+def userPurchasedCourses(request, id):
+
     purchasedCourses = PurchasedCourses.objects.filter(user_id=id)
 
     if not purchasedCourses.count():

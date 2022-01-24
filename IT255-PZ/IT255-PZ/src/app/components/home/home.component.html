@@ -1,5 +1,17 @@
-<p>home works!</p>
+<app-navbar></app-navbar>
 <div *ngFor="let course of courses; index as i;">
-    <input type="text" value="{{course.id}}">
-    <p>{{course.price}}</p>
+    <div>
+        <input type="hidden" value="{{course.id}}">
+        <p>{{course.name}}</p>
+        <p>{{course.shortDescription}}</p>
+        <p>{{course.price.toFixed(2)}}</p>
+        <a class="btn btn-info" [routerLink]="['/course/', course.id]">Look course details</a>
+        <br>
+        <a class="btn btn-danger" *ngIf="userIsAuthor" [routerLink]="['/course/', course.id]">Delete course</a>
+    </div>
+
+</div>
+<div class="alert alert-info" role="alert" *ngIf="noCourses">
+    <p>No courses where found !</p>
+    <p *ngIf="userIsAuthor">Try adding some new ones ! (Add course in the upper right)</p>
 </div>

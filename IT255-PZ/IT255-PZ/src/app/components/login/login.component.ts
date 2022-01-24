@@ -39,8 +39,7 @@ export class LoginComponent implements OnInit {
       if(result[0] === "Wrong username or password !"){
         this.errorMessage = true;
       } else {
-        console.log(result[0].fields);
-        window.sessionStorage.setItem("loginData", JSON.stringify(result))
+        window.sessionStorage.setItem("loginData", JSON.stringify(result));
         this.router.navigate(["home"]);
       }
     })

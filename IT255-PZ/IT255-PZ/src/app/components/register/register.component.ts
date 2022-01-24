@@ -61,7 +61,8 @@ export class RegisterComponent implements OnInit {
   registerUsername(): void {
     let username = this.registerForm.get("username")?.value;
     let password = this.registerForm.get("password")?.value;
-
+    console.log("**********");
+    console.log(this.registerForm.get("username")?.value);
     let author = false
     if (this.registerForm.get("author")?.value === "True") {
       author = true;
@@ -79,9 +80,8 @@ export class RegisterComponent implements OnInit {
     this.userService.register(user).subscribe(result => {
       if(result[0] === "Username exists !"){
         this.usernameError = true;
-        console.log("Opa djole !")
       } else {
-        console.log("Added !")
+        this.router.navigate([""]);
       }
     });
   }

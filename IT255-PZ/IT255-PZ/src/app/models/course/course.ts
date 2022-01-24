@@ -3,12 +3,12 @@ export class Course {
     name: string;
     shortDescription: string;
     description: string;
-    price: string;
+    price: number;
     imageURL: string;
     author_id: number;
 
     constructor(id: number, name: string, shortDescription: string,
-         description: string, price: string, imageURL: string,
+         description: string, price: number, imageURL: string,
           author_id: number) {
         this.id = id;
         this.name = name;
