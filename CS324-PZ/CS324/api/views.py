@@ -148,9 +148,6 @@ def addPurchase(request):
 def getAllCurses(request):
     courses = Course.objects.all()
 
-    #if not courses.count():
-    #    return JsonResponse(['No courses found !'], safe=False)
-
     data = serializers.serialize('json', courses)
     data = json.loads(data)
     return JsonResponse(data, safe=False)
@@ -160,10 +157,6 @@ def getAllCurses(request):
 def getAllAuthroCourses(request, id):
     courses = Course.objects.filter(autor_id=id)
 
-    #if not courses.count():
-    #    # ako nema autor nema svoje kurseve
-    #    return JsonResponse(['No courses found !'], safe=False)
-    
     data = serializers.serialize('json', courses)
     data = json.loads(data)
     return JsonResponse(data, safe=False)
@@ -175,7 +168,7 @@ def userPurchasedCourses(request, id):
     purchasedCourses = PurchasedCourses.objects.filter(user_id=id)
 
     if not purchasedCourses.count():
-        return JsonResponse(['No purchased courses'], safe=False)
+        return JsonResponse([-1], safe=False)
 
     data = serializers.serialize('json', purchasedCourses)
     data = json.loads(data)

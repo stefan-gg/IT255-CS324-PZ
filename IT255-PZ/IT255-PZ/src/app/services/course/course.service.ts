@@ -53,10 +53,17 @@ export class CourseService {
   }
 
   getPurchasedCourses(id: number) {
-    const url = "http://127.0.0.1:8000/database/purchased/" + id;
+    const url = "http://127.0.0.1:8000/database/purchased/" + "" + id;
     return this.httpClient.get(url).pipe(
-      map((data: any) => data.map((item: any) => item.fields.course_id))
+      map((data: any) => data.map((item: any) => this.returnId(item)))
     )
+  }
+
+  private returnId(item:any){
+    if(item == -1){
+      return -1
+    }
+    return item.fields.course_id
   }
 
   private createCourse(item: any) {

@@ -36,13 +36,13 @@ export class HomeComponent implements OnInit {
         } else {
           this.courses = result;
           this.courseService.getPurchasedCourses(user[0].pk).subscribe((result: any) => {
-            let niz = result;
+            let data = result;
 
-            for (let index = 0; index < niz.length; index++) {
+            for (let index = 0; index < data.length; index++) {
 
               for (let indexx = 0; indexx < this.courses.length; indexx++) {
 
-                if (this.courses[indexx].id === niz[index]) {
+                if (this.courses[indexx].id === data[index]) {
                   this.courses.splice(indexx, 1);
                 }
 
