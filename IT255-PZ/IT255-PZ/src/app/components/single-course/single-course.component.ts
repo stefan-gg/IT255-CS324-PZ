@@ -94,7 +94,8 @@ export class SingleCourseComponent implements OnInit {
   }
 
   update() {
-    let id = this.form.get("id").value;
+    let user = JSON.parse(window.sessionStorage.getItem("loginData"));
+    let id = this.form.get("id")?.value;
 
     
     if (id == "") {
@@ -131,7 +132,7 @@ export class SingleCourseComponent implements OnInit {
       name: name,
       short_description: short_description,
       description: description,
-      price: parseInt(price),
+      price: parseFloat(price),
       image_URL: image_URL
     };
 

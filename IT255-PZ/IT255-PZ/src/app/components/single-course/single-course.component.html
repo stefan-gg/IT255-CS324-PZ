@@ -25,13 +25,13 @@
 
             <label for="shortDescription">Short Description</label>
             <input type="text" id="shortDescription" name="shortDescription" value="{{course.shortDescription}}"
-                formControlName="shortDescription">
+            maxlength="128" formControlName="shortDescription">
             <br>
             <label for="imageURL">Image URL</label>
             <input type="text" id="imageURL" name="imageURL" value="{{course.imageURL}}" formControlName="imageURL">
             <br>
             <label for="description">Description</label>
-            <input type="text" id="description" name="description" value="{{course.description}}"
+            <input type="text" maxlength="256" id="description" name="description" value="{{course.description}}"
                 formControlName="description">
             <br>
             <label for="price">Price</label>
