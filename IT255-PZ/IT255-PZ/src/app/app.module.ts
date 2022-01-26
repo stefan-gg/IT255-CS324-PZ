@@ -13,6 +13,7 @@ import { LogoutComponent } from './components/logout/logout.component';
 import { SingleCourseComponent } from './components/single-course/single-course.component';
 import { AddCourseComponent } from './components/add-course/add-course.component';
 import { MyCoursesComponent } from './components/my-courses/my-courses.component';
+import { SearchFilterPipe } from './search-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { MyCoursesComponent } from './components/my-courses/my-courses.component
     LogoutComponent,
     SingleCourseComponent,
     AddCourseComponent,
-    MyCoursesComponent
+    MyCoursesComponent,
+    SearchFilterPipe
   ],
   imports: [
     BrowserModule,

@@ -9,6 +9,7 @@ import { CourseService } from 'src/app/services/course/course.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  public searchFilter: any = '';
   courses: Course[]
   userIsAuthor: boolean
   noCourses: boolean

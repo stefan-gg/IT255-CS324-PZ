@@ -1,5 +1,10 @@
 <app-navbar></app-navbar>
-<div *ngFor="let course of courses; index as i;">
+
+<div class="search">
+    <input type="text" placeholder="Search" [(ngModel)]="searchFilter" >
+</div> 
+
+<div *ngFor="let course of courses | searchFilter: searchFilter">
     <div class="content shadow p-3 mb-5 bg-white rounded">
         <input type="hidden" value="{{course.id}}">
         <h2>{{course.name}}</h2>
