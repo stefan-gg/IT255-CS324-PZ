@@ -13,6 +13,7 @@ export class SingleCourseComponent implements OnInit {
   courseDeleted: boolean
   enoughMoney: boolean
   purchase: boolean
+  duration: number
   updated: boolean
   course: Course
   userIsAuthor: boolean;
@@ -25,6 +26,7 @@ export class SingleCourseComponent implements OnInit {
     this.enoughMoney = true;
     this.purchase = false;
     this.updated = false;
+    this.duration = Math.floor(Math.random() * 40) + 5;
 
     this.form = formBuilder.group({
       id: ['', Validators.required],

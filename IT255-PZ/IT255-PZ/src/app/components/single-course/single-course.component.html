@@ -1,44 +1,59 @@
 <app-navbar></app-navbar>
-<div *ngIf="purchase">
-    <p class="text-success">Purchase successful !</p>
+<div class="text" *ngIf="purchase">
+    <div class="alet alert-success">
+        <p class="text-success">Purchase successful !</p>
+    </div>
 </div>
-<div *ngIf="updated">
-    <p class="text-success">Update successful !</p>
+<div class="text" *ngIf="updated">
+    <div class="alert alert-success">
+        <p>Update successful !</p>
+    </div>
 </div>
-<div *ngIf="!courseDeleted">
+<div class="data" *ngIf="!courseDeleted">
 
     <div *ngIf="!userIsAuthor">
-        {{course.shortDescription}}
-        {{course.imageURL}}
-        {{course.description}}
-        {{course.price}}
+        <img src="{{course.imageURL}}" alt="Course image">
+        <p><strong>{{course.name}}</strong></p>
+        <p>{{course.shortDescription}}</p>
+        <p><strong>Description:</strong> {{course.description}}</p>
+        <p><strong>Price : </strong> {{course.price}}$</p>
+        <p><strong>Duration :</strong> {{duration}}h</p>
     </div>
 
-    <div *ngIf="userIsAuthor">
+    <div class="auth" *ngIf="userIsAuthor">
         <form [formGroup]="form" (ngSubmit)="update()">
             <input type="hidden" value="{{course.id}}" formControlName="id">
-
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" value="{{course.name}}"
-                formControlName="name">
-            <br>
-
-            <label for="shortDescription">Short Description</label>
-            <input type="text" id="shortDescription" name="shortDescription" value="{{course.shortDescription}}"
-            maxlength="128" formControlName="shortDescription">
-            <br>
-            <label for="imageURL">Image URL</label>
-            <input type="text" id="imageURL" name="imageURL" value="{{course.imageURL}}" formControlName="imageURL">
-            <br>
-            <label for="description">Description</label>
-            <input type="text" maxlength="256" id="description" name="description" value="{{course.description}}"
-                formControlName="description">
-            <br>
-            <label for="price">Price</label>
-            <input type="text" name="price" id="price" value="{{course.price}}" formControlName="price">
-            <br>
-            <button type="submit" class="btn btn-success">Update course</button><br>
-            <button (click)="deleteCourse()" class="btn btn-danger">Delete course</button>
+            <table>
+                <tr>
+                    <td> <label for="name">Name</label>
+                    <td><input type="text" id="name" name="name" value="{{course.name}}" formControlName="name">
+                    </td>
+                </tr>
+                <tr>
+                    <td> <label for="shortDescription">Short Description</label></td>
+                    <td><input type="text" id="shortDescription" name="shortDescription"
+                            value="{{course.shortDescription}}" maxlength="128" formControlName="shortDescription"></td>
+                </tr>
+                <tr>
+                    <td><label for="imageURL">Image URL</label></td>
+                    <td> <input type="text" id="imageURL" name="imageURL" value="{{course.imageURL}}"
+                            formControlName="imageURL">
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="description">Description</label></td>
+                    <td> <textarea type="text" id="description" name="description" value="{{course.description}}"
+                            formControlName="description" maxlength="256" cols="30" rows="3"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="price">Price</label></td>
+                    <td> <input type="numbers" name="price" id="price" value="{{course.price}}" formControlName="price">
+                    </td>
+                </tr>
+            </table>
+            <button type="submit" class="btn btn-success button">Update course</button><br>
+            <button (click)="deleteCourse()" class="btn btn-danger button">Delete course</button>
         </form>
     </div>
     <div *ngIf="!userIsAuthor">
@@ -48,6 +63,6 @@
 
 
 </div>
-<div *ngIf="courseDeleted">
-    <a [routerLink]="['/home']">Course is deleted. This is a link to the home page.</a>
+<div class="text" *ngIf="courseDeleted">
+    <a class="text-danger" [routerLink]="['/home']">Course is deleted. This is a link to the home page.</a>
 </div>

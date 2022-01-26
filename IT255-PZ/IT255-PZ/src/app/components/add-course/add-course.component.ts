@@ -28,7 +28,7 @@ export class AddCourseComponent implements OnInit {
     let user = JSON.parse(window.sessionStorage.getItem("loginData"));
 
     if (user === null || user[0].fields.autor !== true) {
-      this.router.navigate(["home"]);
+      this.router.navigate(["logout"]);
     }
   }
 

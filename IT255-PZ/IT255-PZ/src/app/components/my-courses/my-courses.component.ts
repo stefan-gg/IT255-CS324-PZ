@@ -9,13 +9,14 @@ import { CourseService } from 'src/app/services/course/course.service';
   styleUrls: ['./my-courses.component.css']
 })
 export class MyCoursesComponent implements OnInit {
-
+  duration: number;
   courses: Course[]
   userIsAuthor: boolean
   noCourses: boolean
 
   constructor(private courseService: CourseService, private router: Router) { 
     this.noCourses = false;
+    this.duration = Math.floor(Math.random() * 40) + 5;
   }
 
   ngOnInit(): void {
@@ -25,8 +26,8 @@ export class MyCoursesComponent implements OnInit {
   allCourses(): void {
     let user = JSON.parse(window.sessionStorage.getItem("loginData"));
 
-    if (user === null) {
-      this.router.navigate([""]);
+    if (user === null || user[0].fields.autor === true) {
+      this.router.navigate(["home"]);
     }
 
     if (user[0].fields.autor === false) {

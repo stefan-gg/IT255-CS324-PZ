@@ -1,17 +1,23 @@
 <div *ngIf="errorMessage" class="alert alert-danger">
     <p class="text-danger">Login or password are not correct !</p>
 </div>
-<form [formGroup]="form" (ngSubmit)="loginUser()" >
-    <table>
-        <tr>
-            <td><label for="username">Username :</label></td>
-            <td><input type="text" name="username" id="username" formControlName="username"></td>
-        </tr>
-        <tr>
-            <td><label for="password">Password :</label></td>
-            <td><input type="password" name="password" id="password" formControlName="password"></td>
-        </tr>
-        <button class="btn btn-primary" [disabled]="!form.valid" type="submit">Login</button>
-    </table>
-    <a class="text-info" href="/register">Want to create a new account ? Click here !</a>
-</form>
+<div class="loginForm shadow p-3 mb-5 bg-white rounded">
+    <h3>Login</h3>
+    <form [formGroup]="form" (ngSubmit)="loginUser()">
+        <div class="form-group">
+            <table>
+                <tr>
+                    <td><label for="username">Username :</label></td>
+                    <td><input class="form-control" placeholder="User123" type="text" name="username" id="username" formControlName="username"></td>
+                </tr>
+                <tr>
+                    <td><label for="password">Password :</label></td>
+                    <td><input class="form-control" placeholder="*****" type="password" name="password" id="password" formControlName="password"></td>
+                </tr>
+                
+            </table>
+            <button class="button btn btn-primary" [disabled]="!form.valid" type="submit">Login</button>
+        </div>
+        <a class="text-info" href="/register">Want to create a new account ? Click here !</a>
+    </form>
+</div>

@@ -1,0 +1,16 @@
+nav{
+    color: gray;
+}
+
+.separator{
+    padding: 10px;
+}
+
+a{
+    color: white;
+    text-decoration: none;
+}
+
+a:hover{
+    text-decoration: underline;
+}

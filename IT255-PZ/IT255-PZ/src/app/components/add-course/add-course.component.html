@@ -1,23 +1,38 @@
 <app-navbar></app-navbar>
-<div class="alert alert-success" role="alert" *ngIf="added">
+<div class="alert alert-success text" role="alert" *ngIf="added">
     <p>Course added !</p>
 </div>
-<form [formGroup]="form" (ngSubmit)="update()">
-    <label for="name">Name</label>
-    <input type="text" id="name" name="name" formControlName="name">
-    <br>
+<div class="form">
 
-    <label for="shortDescription">Short Description</label>
-    <input type="text" id="shortDescription" maxlength="128" name="shortDescription" formControlName="shortDescription">
-    <br>
-    <label for="imageURL">Image URL</label>
-    <input type="text" id="imageURL" name="imageURL" formControlName="imageURL">
-    <br>
-    <label for="description">Description</label>
-    <input type="text" maxlength="256" id="description" name="description" formControlName="description">
-    <br>
-    <label for="price">Price</label>
-    <input type="text" name="price" id="price" formControlName="price">
-    <br>
-    <button type="submit" [disabled]="!form.valid" class="btn btn-success">Add course</button><br>
-</form>
+    <form [formGroup]="form" (ngSubmit)="update()">
+        <table>
+            <tr>
+                <td><label for="name">Name</label></td>
+                <td><input type="text" id="name" name="name" formControlName="name"></td>
+            </tr>
+            <tr>
+                <td><label for="shortDescription">Short Description</label></td>
+                <td><input type="text" id="shortDescription" maxlength="128" name="shortDescription"
+                        formControlName="shortDescription"></td>
+            </tr>
+            <tr>
+                <td><label for="imageURL">Image URL</label></td>
+                <td><input type="text" id="imageURL" name="imageURL" formControlName="imageURL">
+                </td>
+            </tr>
+            <tr>
+                <td><label for="description">Description</label></td>
+                <td> <textarea type="text" maxlength="256" id="description" name="description"
+                        formControlName="description" cols="30" rows="10"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="price">Price</label></td>
+                <td><input type="number" name="price" id="price" formControlName="price">
+                </td>
+            </tr>
+        </table>
+
+        <button type="submit" [disabled]="!form.valid" class="btn btn-success button">Add course</button><br>
+    </form>
+</div>

@@ -7,7 +7,7 @@
                 <td><a [routerLink]="['/home']">Home</a></td>
                 <td class="separator">|</td>
                 <td *ngIf="!userIsAuthor"><a [routerLink]="['/my-courses']">My courses</a></td>
-                <td class="separator">|</td>
+                <td *ngIf="!userIsAuthor" class="separator">|</td>
                 <div *ngIf="userIsAuthor">
                     <td><a [routerLink]="['/add-course']">Add course</a></td>
                     <td class="separator">|</td>

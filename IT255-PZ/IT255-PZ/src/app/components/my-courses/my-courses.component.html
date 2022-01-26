@@ -1,11 +1,13 @@
 <app-navbar></app-navbar>
 <div *ngFor="let course of courses; index as i;">
-    <div>
-        <p>{{course.name}}</p>
+    <div class="content">
+        <p><strong>{{course.name}}</strong></p>
+        <img src="{{course.imageURL}}" alt="Course image">
         <p>{{course.shortDescription}}</p>
-        <p>{{course.price.toFixed(2)}}</p>
+        <p>{{course.price.toFixed(2)}} $</p>
+        <p><strong>Duration:</strong> {{duration}} h</p>
     </div>
 </div>
 <div class="alert alert-info" role="alert" *ngIf="noCourses">
-    <p>No purchased courses where found !</p>
+    <p class="text">No purchased courses where found !</p>
 </div>
