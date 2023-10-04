@@ -1,7 +1,8 @@
-za pokretanje django projekta - potrebno je uci u folder koji sadrži fajl manage.py
+Neophodno je imati instaliran Python 3.10 minimum i Angular
+neophodno je instalirati django preko pip intall-a kao i django-cors-headers* radi pokretana Django projekta
+
+- za pokretanje django projekta - potrebno je uci u folder koji sadrži fajl manage.py
 potrebno je pokrenuti komandu py manage.py runserver u konzoli
-neophodno je instalirati django preko pip intall-a kao i django-cors-headers*
 IT255-CS324-PZ\CS324-PZ\CS324 - putanja do manage.py fajla
 
-potrebno je instalirati angular*
-za pokretanje angular projekta - ući u angular projekat i pokrenuti komandu ng serve -o(kako bi otvorilo u browser-u)
+- za pokretanje angular projekta - ući u angular projekat i pokrenuti komandu ng serve -o(kako bi otvorilo u browser-u)
